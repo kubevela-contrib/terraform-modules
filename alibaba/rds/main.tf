@@ -56,6 +56,6 @@ variable "allocate_public_connection" {
 
 variable "security_ips" {
   description = "List of IP addresses allowed to access all databases of an instance"
-  type = list(string)
+  type = list
   default = ["0.0.0.0/0",]
 }
