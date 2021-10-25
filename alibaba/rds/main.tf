@@ -8,7 +8,7 @@ module "rds" {
   account_name = var.account_name
   password = var.password
   allocate_public_connection = var.allocate_public_connection
-  security_ips = ["0.0.0.0/0",]
+  security_ips = var.security_ips
 }
 
 output "DB_NAME" {
@@ -52,4 +52,10 @@ variable "allocate_public_connection" {
   description = "Whether to allocate public connection for a RDS instance."
   type        = bool
   default     = true
+}
+
+variable "security_ips" {
+  description = "List of IP addresses allowed to access all databases of an instance"
+  type = list(string)
+  default = ["0.0.0.0/0",]
 }
