@@ -42,6 +42,10 @@ output "REDIS_USER" {
 output "REDIS_ID" {
   value = module.redis.this_redis_instance_id
 }
+  
+output "REDIS_PASSWORD" {
+  value = var.password
+}
 
 variable "instance_name" {
   description = "Redis instance name"
