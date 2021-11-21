@@ -53,3 +53,11 @@ variable "zone_id" {
 output "SECURITY_GROUP_ID" {
   value = alicloud_security_group.sg.id
 }
+
+output "VSWITCH_ID" {
+  value = module.vpc.VSWITCH_ID
+}
+
+output "VPC_ID" {
+  value = module.vpc.VPC_ID
+}
