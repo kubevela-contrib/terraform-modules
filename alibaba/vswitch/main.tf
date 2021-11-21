@@ -69,3 +69,11 @@ variable "vswitch_name" {
   description = "The vswitch name prefix used to launch several new vswitches."
   default     = "terraform"
 }
+
+output "VSWITCH_ID" {
+  value = alicloud_vswitch.vswitches.id
+}
+
+output "VPC_ID" {
+  value = alicloud_vpc.vpc.0.id
+}
