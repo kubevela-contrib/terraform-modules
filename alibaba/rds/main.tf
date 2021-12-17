@@ -1,14 +1,26 @@
 module "rds" {
-  source = "github.com/kubevela-contrib/terraform-alicloud-rds"
-  engine = "MySQL"
-  engine_version = "8.0"
-  instance_type = "rds.mysql.c1.large"
-  instance_storage = "20"
-  instance_name = var.instance_name
-  account_name = var.account_name
-  password = var.password
+  source                     = "github.com/kubevela-contrib/terraform-alicloud-rds"
+  engine                     = "MySQL"
+  engine_version             = "8.0"
+  instance_type              = "rds.mysql.c1.large"
+  instance_storage           = "20"
+  instance_name              = var.instance_name
+  account_name               = var.account_name
+  password                   = var.password
   allocate_public_connection = var.allocate_public_connection
-  security_ips = var.security_ips
+  security_ips               = var.security_ips
+  databases                  = [
+    {
+      "name" : var.database_name,
+      "character_set" : "utf8",
+      "description" : "test database"
+    },
+  ]
+  privilege                  = var.privilege
+}
+
+output "DB_ID" {
+  value = module.rds.db_instance_id
 }
 
 output "DB_NAME" {
@@ -30,22 +42,26 @@ output "DB_PUBLIC_HOST" {
   value = module.rds.db_public_connection_string
 }
 
+output "DATABASE_NAME" {
+  value = module.rds.this_db_database_name
+}
+
 variable "instance_name" {
   description = "RDS instance name"
-  type = string
-  default = "poc"
+  type        = string
+  default     = "poc"
 }
 
 variable "account_name" {
   description = "RDS instance user account name"
-  type = string
-  default = "oam"
+  type        = string
+  default     = "oam"
 }
 
 variable "password" {
   description = "RDS instance account password"
-  type = string
-  default = "Xyfff83jfewGGfaked"
+  type        = string
+  default     = "Xyfff83jfewGGfaked"
 }
 
 variable "allocate_public_connection" {
@@ -56,6 +72,18 @@ variable "allocate_public_connection" {
 
 variable "security_ips" {
   description = "List of IP addresses allowed to access all databases of an instance"
-  type = list
-  default = ["0.0.0.0/0",]
+  type        = list
+  default     = ["0.0.0.0/0",]
+}
+
+variable "database_name" {
+  description = "Database name"
+  type        = string
+  default     = "poc"
+}
+
+variable "privilege" {
+  description = "The privilege of one account access database."
+  type        = string
+  default     = "ReadWrite"
 }
