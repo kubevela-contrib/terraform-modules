@@ -21,3 +21,7 @@ variable "vpc_cidr" {
   type        = string
   default     = "172.16.0.0/12"
 }
+
+output "VPC_ID" {
+  value = resource.alicloud_vpc.vpc.id
+}
