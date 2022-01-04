@@ -23,5 +23,6 @@ variable "vpc_cidr" {
 }
 
 output "VPC_ID" {
+  description = "The vpc id of the newly created vpc."
   value = resource.alicloud_vpc.vpc.id
 }
