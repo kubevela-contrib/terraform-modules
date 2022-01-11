@@ -21,29 +21,37 @@ module "rds" {
 
 output "DB_ID" {
   value = module.rds.db_instance_id
+  description = "RDS Instance ID"
 }
 
 output "DB_NAME" {
   value = module.rds.this_db_instance_name
+  description = "RDS Instance Name"
 }
 output "DB_USER" {
   value = module.rds.this_db_database_account
+  description = "RDS Instance User"
 }
 output "DB_PORT" {
   value = module.rds.this_db_instance_port
+  description = "RDS Instance Port"
 }
 output "DB_HOST" {
   value = module.rds.this_db_instance_connection_string
+  description = "RDS Instance Host"
 }
 output "DB_PASSWORD" {
   value = var.password
+  description = "RDS Instance Password"
 }
 output "DB_PUBLIC_HOST" {
   value = module.rds.db_public_connection_string
+  description = "RDS Instance Public Host"
 }
 
 output "DATABASE_NAME" {
   value = module.rds.this_db_database_name
+  description = "RDS Database Name"
 }
 
 variable "instance_name" {
