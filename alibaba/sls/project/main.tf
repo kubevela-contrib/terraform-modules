@@ -12,5 +12,5 @@ variable "name" {
 variable "description" {
   description = "Description of security group"
   type        = string
-  default     = "Security Group managed by Terraform"
+  default     = "Managed by Terraform"
 }

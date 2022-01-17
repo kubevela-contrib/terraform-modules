@@ -19,6 +19,11 @@ module "rds" {
   privilege = var.privilege
 }
 
+output "RESOURCE_IDENTIFIER" {
+  description = "The identifier of the resource"
+  value       = module.rds.db_instance_id
+}
+
 output "DB_ID" {
   value       = module.rds.db_instance_id
   description = "RDS Instance ID"
