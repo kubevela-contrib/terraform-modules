@@ -194,31 +194,43 @@ variable "zone_id" {
   # "cn-beijing-a"
 }
 
+output "RESOURCE_IDENTIFIER" {
+  description = "The identifier of the resource"
+  value       = module.kubernetes.cluster_id
+}
+
 output "CLUSTER_ID" {
-  value = module.kubernetes.cluster_id
+  value       = module.kubernetes.cluster_id
+  description = "The ID of the cluster"
 }
 
 output "NAME" {
-  value = module.kubernetes.name
+  value       = module.kubernetes.name
+  description = "The name of the kubernetes cluster."
 }
 
 output "KUBECONFIG" {
-  value      = module.kubernetes.kubeconfig
-  depends_on = [module.kubernetes]
+  value       = module.kubernetes.kubeconfig
+  depends_on  = [module.kubernetes]
+  description = "The KubeConfig string of the kubernetes cluster."
 }
 
 output "CLUSTER_CA_CERT" {
-  value = module.kubernetes.cluster_ca_cert
+  value       = module.kubernetes.cluster_ca_cert
+  description = "The CA certificate of the kubernetes cluster."
 }
 
 output "CLIENT_CERT" {
-  value = module.kubernetes.client_cert
+  value       = module.kubernetes.client_cert
+  description = "The client certificate of the kubernetes cluster."
 }
 
 output "CLIENT_KEY" {
-  value = module.kubernetes.client_key
+  value       = module.kubernetes.client_key
+  description = "The client key of the kubernetes cluster."
 }
 
 output "API_SERVER_INTERNET" {
-  value = module.kubernetes.api_server_internet
+  value       = module.kubernetes.api_server_internet
+  description = "The internet access of the kubernetes api server."
 }

@@ -27,24 +27,31 @@ module "redis" {
   backup_policy_backup_period = ["Monday", "Wednesday", "Friday"]
 
 }
+
+output "RESOURCE_IDENTIFIER" {
+  description = "The identifier of the resource"
+  value       = module.redis.this_redis_instance_id
+}
+
 output "REDIS_NAME" {
-  value = module.redis.this_redis_instance_name
+  value       = module.redis.this_redis_instance_name
+  description = "Redis instance name"
 }
 
 output "REDIS_CONNECT_ADDRESS" {
-  value = format("%s.%s", module.redis.this_redis_instance_id, "redis.rds.aliyuncs.com")
+  value       = format("%s.%s", module.redis.this_redis_instance_id, "redis.rds.aliyuncs.com")
+  description = "Redis connect address"
 }
 
 output "REDIS_USER" {
-  value = module.redis.this_redis_instance_account_name
-}
-
-output "REDIS_ID" {
-  value = module.redis.this_redis_instance_id
+  value       = module.redis.this_redis_instance_account_name
+  description = "Redis user"
 }
 
 output "REDIS_PASSWORD" {
-  value = var.password
+  value       = var.password
+  sensitive   = true
+  description = "Redis password"
 }
 
 variable "instance_name" {

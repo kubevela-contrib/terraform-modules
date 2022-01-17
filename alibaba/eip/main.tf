@@ -20,3 +20,7 @@ output "EIP_ADDRESS" {
   description = "The elastic ip address."
   value       = module.eip.this_eip_address.0
 }
+
+output "RESOURCE_IDENTIFIER" {
+  value = module.eip.this_eip_id.0
+}

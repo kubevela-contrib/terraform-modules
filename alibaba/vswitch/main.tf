@@ -72,8 +72,10 @@ variable "vswitch_name" {
 
 output "VSWITCH_ID" {
   value = alicloud_vswitch.vswitches.id
+  description = "VSwitch ID"
 }
 
 output "VPC_ID" {
   value = alicloud_vpc.vpc.0.id
+  description = "VPC ID"
 }
