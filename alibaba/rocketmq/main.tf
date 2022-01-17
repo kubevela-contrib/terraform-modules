@@ -21,12 +21,13 @@ resource "alicloud_ons_group" "default" {
 data "alicloud_ons_instances" "default" {
   ids         = [alicloud_ons_instance.default.id]
   name_regex  = alicloud_ons_instance.default.name
+  enable_details = true
 }
 
 variable "ons_instance_name" {
   description = "The specification of ons instance name."
   type        = string
-  default     = "tf-onsInstanceName123"
+  default     = "tf-vela"
 }
 
 variable "topic" {
@@ -94,8 +95,3 @@ output "HTTP_ENDPOINT_INTERNAL" {
 output "TCP_ENDPOINT" {
   value = data.alicloud_ons_instances.default.instances.0.tcp_endpoint
 }
-
-output "xxx" {
-  value = data.alicloud_ons_instances.default.instances
-}
-
