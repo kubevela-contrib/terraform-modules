@@ -74,24 +74,30 @@ variable "perm" {
 
 output "INSTANCE_ID" {
   value = alicloud_ons_instance.default.id
+  description = "The id of ons instance"
 }
 
 output "TOPIC_ID" {
   value = alicloud_ons_topic.default.id
+  description = "The id of ons topic"
 }
 
 output "GROUP_ID" {
   value = alicloud_ons_group.default.id
+  description = "The id of ons group"
 }
 
 output "HTTP_ENDPOINT_INTERNET" {
   value = data.alicloud_ons_instances.default.instances.0.http_internet_endpoint
+  description = "The internet http endpoint of ons instance"
 }
 
 output "HTTP_ENDPOINT_INTERNAL" {
   value = data.alicloud_ons_instances.default.instances.0.http_internal_endpoint
+  description = "The internal http endpoint of ons instance"
 }
 
 output "TCP_ENDPOINT" {
   value = data.alicloud_ons_instances.default.instances.0.tcp_endpoint
+  description = "The tcp endpoint of ons instance"
 }
