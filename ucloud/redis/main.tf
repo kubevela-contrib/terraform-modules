@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     ucloud = {
-      source = "ucloud/ucloud"
+      source  = "ucloud/ucloud"
       version = "~>1.29.0"
     }
   }
@@ -11,7 +11,7 @@ terraform {
 # Document: https://registry.terraform.io/providers/ucloud/ucloud/latest/docs/resources/redis_instance
 provider "ucloud" {
   base_url = "http://api.service.ucloud.cn"
-  region      = "cn-bj2"
+  region   = "cn-bj2"
 }
 
 # Create redis instance
@@ -34,11 +34,11 @@ resource "ucloud_redis_instance" "example" {
 # output
 output "REDIS_INSTANCE_ID" {
   description = "The Ucloud Redis InstancdID"
-  value = ucloud_redis_instance.addon_redis.id
+  value       = ucloud_redis_instance.addon_redis.id
 }
 output "REDIS_IP" {
   description = "The Ucloud Redis Private IP"
-  value = ucloud_redis_instance.addon_redis.ip_set[0].ip
+  value       = ucloud_redis_instance.addon_redis.ip_set[0].ip
 }
 output "REDIS_PORT" {
   value = "6379"
@@ -63,8 +63,8 @@ variable "zone" {
   description = "Refer to https://docs.ucloud.cn/api/summary/regionlist"
 }
 variable "instance_type" {
-  type = string
-  default = "redis-master-2"
+  type        = string
+  default     = "redis-master-2"
   description = "See https://docs.ucloud.cn/terraform/specification/umem_instance?id=redis"
 }
 variable "name" {
@@ -72,15 +72,15 @@ variable "name" {
 }
 variable "vpc_id" {
   description = "The ID of VPC linked to the Redis instance."
-  default = ""
+  default     = ""
 }
 variable "subnet_id" {
   description = "The ID of subnet linked to the Redis instance."
-  default = ""
+  default     = ""
 }
 variable "engine_version" {
   description = "The version of engine of active-standby Redis. Possible values are: 4.0, 5.0 and 6.0."
-  default = "5.0"
+  default     = "5.0"
 }
 # uredis 5.0 ignores username
 #variable "username" {
@@ -89,20 +89,20 @@ variable "engine_version" {
 #}
 variable "password" {
   description = "Redis instance account password"
-  type = string
+  type        = string
 }
 variable "auto_backup" {
-  type = string
-  default = "disable"
+  type        = string
+  default     = "disable"
   description = "Auto backup of Redis instance,(only Active-Standby): enable, disable"
 }
 variable "backup_begin_time" {
-  type = number
-  default = 3
+  type        = number
+  default     = 3
   description = "When the backup starts(hour): 0-23"
 }
 variable "charge_type" {
-  type = string
-  default = "dynamic"
+  type        = string
+  default     = "dynamic"
   description = "The charge type of Redis instance: year|month|dynamic"
 }

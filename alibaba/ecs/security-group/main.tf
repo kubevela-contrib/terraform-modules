@@ -16,26 +16,26 @@ resource "alicloud_security_group_rule" "sg_rule" {
 }
 
 module "vpc" {
-  source = "git::github.com/kubevela-contrib/terraform-modules.git//alibaba/vswitch"
+  source  = "git::github.com/kubevela-contrib/terraform-modules.git//alibaba/vswitch"
   zone_id = var.zone_id
 }
 
 variable "name" {
-  default = "tf"
+  default     = "tf"
   description = "The name of the security group rule"
-  type = string
+  type        = string
 }
 
 variable "description" {
-  default = "The description of the security group rule"
+  default     = "The description of the security group rule"
   description = "The description of the security group rule"
-  type = string
+  type        = string
 }
 
 variable "port_range" {
-  default = "1/65535"
+  default     = "1/65535"
   description = "The port range of the security group rule"
-  type = string
+  type        = string
 }
 
 variable "cidr_ip" {

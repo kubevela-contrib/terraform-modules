@@ -32,7 +32,7 @@ resource "alicloud_cs_serverless_kubernetes" "serverless" {
   service_cidr            = "172.21.0.0/20"
   service_discovery_types = ["PrivateZone"]
   # Enable log service, A project named k8s-log-{ClusterID} will be automatically created
-  logging_type            = "SLS"
+  logging_type = "SLS"
 
   # addons 
   addons {

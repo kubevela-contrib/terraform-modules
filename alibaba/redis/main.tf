@@ -42,7 +42,7 @@ output "REDIS_USER" {
 output "REDIS_ID" {
   value = module.redis.this_redis_instance_id
 }
-  
+
 output "REDIS_PASSWORD" {
   value = var.password
 }

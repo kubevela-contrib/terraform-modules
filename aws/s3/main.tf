@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "bucket-acl" {
   bucket = var.bucket
-  acl = var.acl
+  acl    = var.acl
 }
 
 output "BUCKET_NAME" {
@@ -9,12 +9,12 @@ output "BUCKET_NAME" {
 
 variable "bucket" {
   description = "S3 bucket name"
-  default = "vela-website"
-  type = string
+  default     = "vela-website"
+  type        = string
 }
 
 variable "acl" {
   description = "S3 bucket ACL"
-  default = "private"
-  type = string
+  default     = "private"
+  type        = string
 }
