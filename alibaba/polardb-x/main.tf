@@ -1,5 +1,15 @@
 module "vswitch" {
   source = "git::github.com/kubevela-contrib/terraform-modules.git//alibaba/vswitch"
+  zone_id = var.availability_zone
+}
+
+terraform {
+  required_providers {
+    alicloud = {
+      source = "hashicorp/alicloud"
+      version = "1.152.0"
+    }
+  }
 }
 
 # Some of the following HCl comes from https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc-slb-ecs-rds-drds
@@ -22,7 +32,7 @@ variable "availability_zone" {
 variable "description" {
   description = "The specification of module description."
   type        = string
-  default     = "tf-vpc-slb-ecs-rds-drds-description"
+  default     = "example"
 }
 
 variable "drds_instance_charge_type" {
@@ -34,13 +44,13 @@ variable "drds_instance_charge_type" {
 variable "drds_instance_series" {
   description = "The instance series type of DRDS."
   type        = string
-  default     = "drds.sn1.2c8g"
+  default     = "drds.sn2.4c16g"
 }
 
 variable "drds_specification" {
   description = "The instance specification type of DRDS."
   type        = string
-  default     = "drds.sn1.2c8g.2C8G"
+  default     = "drds.sn2.4c16g.8c32g"
 }
 
 
