@@ -1,25 +1,16 @@
-resource "alicloud_mongodb_account" "example" {
-  account_name        = "root"
-  account_password    = "example_value"
-  instance_id         = module.alicloud_mongodb_instance.DB_ID
-  account_description = "example_value"
-}
-
-module "vswitch" {
-  source = "git::github.com/kubevela-contrib/terraform-modules.git//alibaba/vswitch"
+resource "alicloud_vpc" "vpc" {
   count       = var.vpc_id != "" ? 0 : var.create_vpc ? 1 : 0
   vpc_name    = var.vpc_name
   cidr_block  = var.vpc_cidr
   description = var.vpc_description
-  vpc_id       = var.vpc_id != "" ? var.vpc_id : module.vswitch.VPC_ID
+}
+
+resource "alicloud_vswitch" "vswitches" {
+  vpc_id       = var.vpc_id != "" ? var.vpc_id : concat(alicloud_vpc.vpc.*.id, [""])[0]
   vswitch_name = var.vswitch_name
   cidr_block   = var.vswitch_cidr
   description  = var.vswitch_description
   zone_id      = var.zone_id
-}
-
-module "alicloud_mongodb_instance" {
-  source = "git::github.com/kubevela-contrib/terraform-modules.git//alibaba/mongodb/instance"
 }
 
 # VPC variables
@@ -78,3 +69,19 @@ variable "vswitch_name" {
   description = "The vswitch name prefix used to launch several new vswitches."
   default     = "terraform"
 }
+
+# MongoDB instance
+module "alicloud_mongodb_instance" {
+  source = "git::github.com/kubevela-contrib/terraform-modules.git//alibaba/mongodb/instance"
+}
+
+
+# MongoDB account
+resource "alicloud_mongodb_account" "example" {
+  account_name        = "root"
+  account_password    = "example_value"
+  instance_id         = module.alicloud_mongodb_instance.DB_ID
+  account_description = "example_value"
+}
+
+
