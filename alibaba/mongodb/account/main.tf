@@ -13,75 +13,36 @@ resource "alicloud_vswitch" "vswitches" {
   zone_id      = var.zone_id
 }
 
-# VPC variables
-variable "create_vpc" {
-  description = "Whether to create vpc. If false, you can specify an existing vpc by setting 'vpc_id'."
-  type        = bool
-  default     = true
-}
-
-variable "vpc_name" {
-  description = "The vpc name used to launch a new vpc."
-  type        = string
-  default     = "terraform"
-}
-
-variable "vpc_description" {
-  description = "The vpc description used to launch a new vpc."
-  type        = string
-  default     = "A new VPC created by Terraform"
-}
-
-variable "vpc_cidr" {
-  description = "The cidr block used to launch a new vpc."
-  type        = string
-  default     = "172.16.0.0/12"
-}
-
-# Vsiwtch variables
-variable "vpc_id" {
-  description = "The vpc id used to launch several vswitches. If set, the 'create' will be ignored."
-  type        = string
-  default     = ""
-}
-
-variable "vswitch_cidr" {
-  description = "cidr blocks used to launch a new vswitch."
-  type        = string
-  default     = "172.16.0.0/18"
-}
-
-# VSwitch variables
-
-variable "vswitch_description" {
-  description = "The vswitch description used to launch several new vswitch."
-  type        = string
-  default     = "New VSwitch created by Terraform"
-}
-
-variable "zone_id" {
-  description = "Availability Zone ID"
-  type        = string
-  default     = "cn-beijing-a"
-}
-
-variable "vswitch_name" {
-  description = "The vswitch name prefix used to launch several new vswitches."
-  default     = "terraform"
-}
 
 # MongoDB instance
 module "alicloud_mongodb_instance" {
-  source = "git::github.com/kubevela-contrib/terraform-modules.git//alibaba/mongodb/instance"
+  # source = "git::github.com/kubevela-contrib/terraform-modules.git//alibaba/mongodb/instance"
+  source = "../instance"
+
+  engine_version       = var.engine_version
+  name                 = var.name
+  instance_charge_type = var.instance_charge_type
+  db_instance_class    = var.db_instance_class
+  db_instance_storage  = var.db_instance_storage
+  period               = var.period
+  security_ip_list     = var.security_ip_list
+  replication_factor   = var.replication_factor
+  storage_engine       = var.storage_engine
+  vswitch_id           = var.vswitch_id
+  zone_id              = var.zone_id
+  account_password     = var.account_password
+  backup_period        = var.backup_period
+  backup_time          = var.backup_time
+  tags                 = var.tags
 }
 
 
-# MongoDB account
-resource "alicloud_mongodb_account" "example" {
-  account_name        = "root"
-  account_password    = "example_value"
-  instance_id         = module.alicloud_mongodb_instance.DB_ID
-  account_description = "example_value"
-}
+## MongoDB account
+#resource "alicloud_mongodb_account" "example" {
+#  account_name        = "root"
+#  account_password    = "example_value"
+#  instance_id         = module.alicloud_mongodb_instance.DB_ID
+#  account_description = "example_value"
+#}
 
 

@@ -21,3 +21,4 @@ resource "alicloud_mongodb_instance" "this" {
   backup_time          = var.backup_time
   tags                 = var.tags
 }
+
