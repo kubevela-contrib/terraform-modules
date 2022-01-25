@@ -31,3 +31,5 @@ override.tf.json
 .terraform.lock.hcl
 
 .idea/
+
+.DS_Store
