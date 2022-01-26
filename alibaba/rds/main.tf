@@ -9,14 +9,27 @@ module "rds" {
   password                   = var.password
   allocate_public_connection = var.allocate_public_connection
   security_ips               = var.security_ips
-  databases = [
+  databases                  = [
     {
       "name" : var.database_name,
       "character_set" : "utf8",
       "description" : "test database"
     },
   ]
-  privilege = var.privilege
+  privilege                  = var.privilege
+
+
+}
+
+resource "null_resource" "default" {
+  depends_on = [
+    module.rds
+  ]
+
+  provisioner "local-exec" {
+    command = var.sql_file != "" ? "ossutil cp -r ${var.sql_bucket_name}/${var.sql_file} . --access-key-id=$ALICLOUD_ACCESS_KEY --access-key-secret=$ALICLOUD_SECRET_KEY --endpoint=${var.sql_bucket_endpoint} && mysql -h ${module.rds.db_public_connection_string} -u ${module.rds.this_db_database_account} \"-p${var.password}\" -D ${var.database_name} < ./${var.sql_file}" : "date"
+
+  }
 }
 
 output "RESOURCE_IDENTIFIER" {
@@ -86,17 +99,35 @@ variable "allocate_public_connection" {
 variable "security_ips" {
   description = "List of IP addresses allowed to access all databases of an instance"
   type        = list(any)
-  default     = ["0.0.0.0/0", ]
+  default     = ["0.0.0.0/0",]
 }
 
 variable "database_name" {
   description = "Database name"
   type        = string
-  default     = "poc"
+  default     = "dblinks"
 }
 
 variable "privilege" {
   description = "The privilege of one account access database."
   type        = string
   default     = "ReadWrite"
+}
+
+variable "sql_file" {
+  description = "The name of SQL file in the bucket, like `db.sql`"
+  type        = string
+  default     = ""
+}
+
+variable "sql_bucket_name" {
+  description = "The bucket name of the SQL file. like `oss://example`"
+  type        = string
+  default     = ""
+}
+
+variable "sql_bucket_endpoint" {
+  description = "The endpoint of the bucket. like `oss-cn-hangzhou.aliyuncs.com`"
+  type        = string
+  default     = ""
 }
