@@ -20,25 +20,25 @@ data "alicloud_mse_clusters" "prod" {
 }
 
 variable "cluster_specification" {
-  description = "The engine specification of MSE Cluster"
+  description = "The engine specification of MSE Cluster. Valid values: MSE_SC_1_2_200_c：1C2G MSE_SC_2_4_200_c：2C4G MSE_SC_4_8_200_c：4C8G MSE_SC_8_16_200_c：8C16G"
   type        = string
   default     = "MSE_SC_1_2_200_c"
 }
 
 variable "cluster_type" {
-  description = "The type of MSE Cluster"
+  description = "The type of MSE Cluster. Valid values: ZooKeeper、Nacos-Ans and Eureka"
   type        = string
   default     = "Nacos-Ans"
 }
 
 variable "cluster_version" {
-  description = "The version of MSE Cluster"
+  description = "The version of MSE Cluster. Valid values: ZooKeeper_3_4_14, ZooKeeper_3_5_5, NACOS_ANS_1_1_3, NACOS_ANS_1_2_1, EUREKA_1_9_3"
   type        = string
   default     = "NACOS_ANS_1_2_1"
 }
 
 variable "net_type" {
-  description = "The type of network"
+  description = "The type of network. Valid values: privatenet and pubnet"
   type        = string
   default     = "pubnet"
 }
@@ -78,4 +78,9 @@ output "INTRANET_DOMAIN" {
 output "INTRANET_PORT" {
   description = "The intranet port of the resource"
   value       = 8848
+}
+
+output "Net_TYPE" {
+  value = var.net_type
+  description = "The type of network"
 }
