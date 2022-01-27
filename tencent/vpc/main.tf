@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    tencentcloud = {
+      source = "tencentcloudstack/tencentcloud"
+    }
+  }
+}
+
 resource "tencentcloud_vpc" "vpc" {
   name         = var.vpc_name
   cidr_block   = var.vpc_cidr
