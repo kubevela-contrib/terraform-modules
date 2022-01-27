@@ -9,6 +9,7 @@ terraform {
 variable "availability_zone" {
   description = "Availability Zone"
   default = "ap-beijing-1"
+  type = string
 }
 
 resource "tencentcloud_vpc" "foo" {
@@ -43,5 +44,6 @@ variable "is_multicast" {
 }
 
 output "SUBNET_ID" {
+  description = "Subnet ID"
   value = tencentcloud_subnet.subnet.id
 }
