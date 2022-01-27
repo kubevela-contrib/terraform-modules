@@ -17,16 +17,19 @@ resource "tencentcloud_vpc" "vpc" {
 variable "vpc_name" {
   description = "The vpc name used to launch a new vpc when 'vpc_id' is not specified."
   default     = "tf-modules-vpc"
+  type        = string
 }
 
 variable "vpc_cidr" {
   description = "The cidr block used to launch a new vpc when 'vpc_id' is not specified."
   default     = "172.16.0.0/16"
+  type        = string
 }
 
 variable "vpc_is_multicast" {
   description = "Specify the vpc is multicast when 'vpc_id' is not specified."
   default     = true
+  type        = bool
 }
 
 variable "vpc_dns_servers" {
