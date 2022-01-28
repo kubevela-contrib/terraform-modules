@@ -25,13 +25,13 @@ data "alicloud_ons_instances" "default" {
 }
 
 variable "ons_instance_name" {
-  description = "The specification of ons instance name."
+  description = "The name of ons instance. The length must be 3 to 64 characters. Chinese characters, English letters digits and hyphen are allowed."
   type        = string
   default     = "tf-vela"
 }
 
 variable "topic" {
-  description = "The specification of ons topic name."
+  description = "The specification of ons topic name. Two topics on a single instance cannot have the same name and the name cannot start with 'GID' or 'CID'. The length cannot exceed 64 characters."
   type        = string
   default     = "onsTopicName1"
 }
@@ -50,7 +50,7 @@ variable "ons_topic_remark" {
 
 variable "message_type" {
   default     = 0
-  description = "The type of the message"
+  description = "The type of the message. Read [Ons Topic Create](https://www.alibabacloud.com/help/doc-detail/29591.html) for further details."
   type        = number
 }
 
@@ -62,7 +62,7 @@ variable "group_name" {
 
 variable "group_type" {
   default     = "tcp"
-  description = "The type of MQ group"
+  description = "Specify the protocol applicable to the created Group ID. Valid values: tcp, http. Default to tcp"
   type        = string
 }
 
