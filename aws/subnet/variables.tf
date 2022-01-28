@@ -52,8 +52,8 @@ variable "enable_classiclink_dns_support" {
   default     = null
 }
 
-variable "tags" {
-  description = "A map of tags to add to all resources"
+variable "subnet_tags" {
+  description = "A map of tags for the Subnet"
   type        = map(string)
   default     = {}
 }
@@ -62,4 +62,40 @@ variable "vpc_tags" {
   description = "Additional tags for the VPC"
   type        = map(string)
   default     = {}
+}
+
+variable "map_public_ip_on_launch" {
+  description = "Should be false if you do not want to auto-assign public IP on launch"
+  type        = bool
+  default     = true
+}
+
+variable "subnet_cidr" {
+  description = "A list of subnets cidrs inside the VPC"
+  type        = string
+  default     = "10.0.0.0/24"
+}
+
+variable "ipv6_cidr_block" {
+  description = "The IPv6 CIDR block for the VPC."
+  type        = string
+  default     = null
+}
+
+variable "availability_zone" {
+  description = "An availability zone name in the region"
+  type        = string
+  default = ""
+}
+
+variable "assign_ipv6_address_on_creation" {
+  description = "Assign IPv6 address on subnet, must be disabled to change IPv6 CIDRs. This is the IPv6 equivalent of map_public_ip_on_launch"
+  type        = bool
+  default     = false
+}
+
+variable "vpc_id" {
+  description = "The ID of the VPC"
+  type        = string
+  default     = ""
 }
