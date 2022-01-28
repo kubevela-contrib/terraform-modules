@@ -23,3 +23,27 @@ output "PRIVATE_ENDPOINT" {
   description = "Private endpoint of the instance"
 }
 
+data "alicloud_amqp_queues" "ids" {
+  instance_id       = alicloud_amqp_instance.default.0.id
+  virtual_host_name = alicloud_amqp_virtual_host.default.id
+}
+
+output "QUEUE_ID" {
+  value = alicloud_amqp_queue.default.id
+  description = "Queue ID"
+}
+
+output "QUEUE_NAME" {
+  value = var.name
+  description = "Queue Name"
+}
+
+output "VIRTUAL_HOST_NAME" {
+  description = "Virtual Host Name"
+  value = alicloud_amqp_virtual_host.default.virtual_host_name
+}
+
+output "EXCHANGE_TYPE" {
+  value = var.exchange_type
+  description = "Exchange Type"
+}

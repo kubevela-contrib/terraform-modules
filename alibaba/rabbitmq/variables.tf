@@ -1,7 +1,7 @@
 variable "name" {
   description = "The specification of module name."
   type        = string
-  default     = "terraform_name"
+  default     = "terraform"
 }
 
 variable "instance_type" {
