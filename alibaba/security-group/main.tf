@@ -15,9 +15,13 @@ resource "alicloud_security_group_rule" "sg_rule" {
   cidr_ip           = var.cidr_ip
 }
 
+data "alicloud_zones" "default" {
+  available_resource_creation = "VSwitch"
+}
+
 module "vpc" {
   source  = "git::github.com/kubevela-contrib/terraform-modules.git//alibaba/vswitch"
-  zone_id = var.zone_id
+  zone_id = var.zone_id==""? data.alicloud_zones.default.zones.0.id : var.zone_id
 }
 
 variable "name" {
@@ -47,17 +51,20 @@ variable "cidr_ip" {
 variable "zone_id" {
   description = "Availability Zone ID"
   type        = string
-  default     = "cn-hongkong-b"
+  default     = ""
 }
 
 output "SECURITY_GROUP_ID" {
-  value = alicloud_security_group.sg.id
+  description = "Security Group ID"
+  value       = alicloud_security_group.sg.id
 }
 
 output "VSWITCH_ID" {
-  value = module.vpc.VSWITCH_ID
+  description = "VSwitch ID"
+  value       = module.vpc.VSWITCH_ID
 }
 
 output "VPC_ID" {
-  value = module.vpc.VPC_ID
+  description = "VPC ID"
+  value       = module.vpc.VPC_ID
 }
