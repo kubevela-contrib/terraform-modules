@@ -18,3 +18,8 @@ variable "location" {
   description = "The location of the resource group"
   type = string
 }
+
+output "resource_group_name" {
+  value = var.name
+  description = "The name of the resource group"
+}
