@@ -87,7 +87,6 @@ variable "account_name" {
 variable "password" {
   description = "RDS instance account password"
   type        = string
-  default     = "Xyfff83jfewGGfaked"
 }
 
 variable "allocate_public_connection" {
