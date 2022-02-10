@@ -114,20 +114,20 @@ variable "privilege" {
   default     = "ReadWrite"
 }
 
-variable "sql_file" {
-  description = "The name of SQL file in the bucket, like `db.sql`"
-  type        = string
-  default     = ""
-}
-
-variable "sql_bucket_name" {
-  description = "The bucket name of the SQL file. like `oss://example`"
-  type        = string
-  default     = ""
-}
-
-variable "sql_bucket_endpoint" {
-  description = "The endpoint of the bucket. like `oss-cn-hangzhou.aliyuncs.com`"
-  type        = string
-  default     = ""
-}
+#variable "sql_file" {
+#  description = "The name of SQL file in the bucket, like `db.sql`"
+#  type        = string
+#  default     = ""
+#}
+#
+#variable "sql_bucket_name" {
+#  description = "The bucket name of the SQL file. like `oss://example`"
+#  type        = string
+#  default     = ""
+#}
+#
+#variable "sql_bucket_endpoint" {
+#  description = "The endpoint of the bucket. like `oss-cn-hangzhou.aliyuncs.com`"
+#  type        = string
+#  default     = ""
+#}
