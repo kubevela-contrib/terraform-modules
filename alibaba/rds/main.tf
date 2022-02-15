@@ -21,16 +21,16 @@ module "rds" {
 
 }
 
-resource "null_resource" "default" {
-  depends_on = [
-    module.rds
-  ]
-
-  provisioner "local-exec" {
-    command = var.sql_file != "" ? "ossutil cp -r ${var.sql_bucket_name}/${var.sql_file} . --access-key-id=$ALICLOUD_ACCESS_KEY --access-key-secret=$ALICLOUD_SECRET_KEY --endpoint=${var.sql_bucket_endpoint} && mysql -h ${module.rds.db_public_connection_string} -u ${module.rds.this_db_database_account} \"-p${var.password}\" -D ${var.database_name} < ./${var.sql_file}" : "date"
-
-  }
-}
+#resource "null_resource" "default" {
+#  depends_on = [
+#    module.rds
+#  ]
+#
+#  provisioner "local-exec" {
+#    command = var.sql_file != "" ? "ossutil cp -r ${var.sql_bucket_name}/${var.sql_file} . --access-key-id=$ALICLOUD_ACCESS_KEY --access-key-secret=$ALICLOUD_SECRET_KEY --endpoint=${var.sql_bucket_endpoint} && mysql -h ${module.rds.db_public_connection_string} -u ${module.rds.this_db_database_account} \"-p${var.password}\" -D ${var.database_name} < ./${var.sql_file}" : "date"
+#
+#  }
+#}
 
 output "RESOURCE_IDENTIFIER" {
   description = "The identifier of the resource"
