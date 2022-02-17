@@ -24,10 +24,10 @@ server_configs:
     logger.level: "info"
 
 pd_servers:
-  - host: ${monitor_ip}
+  - host: ${pd_ip}
 
 tidb_servers:
-  - host: ${monitor_ip}
+  - host: ${tidb_ip}
 
 tikv_servers:
   - host: ${tikv1_ip}
@@ -49,10 +49,10 @@ tikv_servers:
       server.labels: { host: "logic-host-3" }
 
 tiflash_servers:
-  - host: ${monitor_ip}
+  - host: ${tiflash_ip}
 
 monitoring_servers:
-  - host: ${monitor_ip}
+  - host: ${monitoring_ip}
 
 grafana_servers:
-  - host: ${monitor_ip}
+  - host: ${grafana_ip}

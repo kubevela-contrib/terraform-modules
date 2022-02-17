@@ -39,5 +39,5 @@ output "tikv_ip" {
 }
 
 output "monitor_ip" {
-  value = alicloud_instance.monitor.public_ip
+  value = alicloud_instance.monitoring.public_ip
 }
