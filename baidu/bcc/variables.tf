@@ -45,3 +45,7 @@ variable "payment_timing" {
 variable "instance_type" {
   default = "General"
 }
+
+variable "admin_pass" {
+  type = string
+}

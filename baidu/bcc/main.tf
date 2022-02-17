@@ -18,10 +18,6 @@ data "baiducloud_specs" "default" {
   memory_size_in_gb = 8
 }
 
-output "ssss" {
-  value = data.baiducloud_specs.default
-}
-
 data "baiducloud_zones" "default" {
   name_regex = ".*d$"
 }
@@ -85,44 +81,51 @@ resource "baiducloud_security_group_rule" "default2" {
 #  count      = var.number
 #}
 
-#resource "baiducloud_instance" "my-server" {
-#  count                 = var.number
-#  image_id              = data.baiducloud_images.default.images.0.id
-#  name                  = "${var.instance_short_name}-${var.instance_role}-${format(var.instance_format, count.index + 1)}"
-#  availability_zone     = data.baiducloud_zones.default.zones.0.zone_name
-#  cpu_count             = data.baiducloud_specs.default.specs.0.cpu_count
-#  memory_capacity_in_gb = data.baiducloud_specs.default.specs.0.memory_size_in_gb
-#  billing = {
-#    payment_timing = var.payment_timing
-#  }
-#
-#  subnet_id       = baiducloud_subnet.default.id
-#  security_groups = [baiducloud_security_group.default.id]
-#
-#  related_release_flag     = true
-#  delete_cds_snapshot_flag = true
-#
-#  // The action is optional, which can be start or stop, default is start.
-#  action = "start"
-#
-#  // option parameter, please set your keypair id
-#  #keypair_id = "k-xxxxxx"
-#
+resource "baiducloud_instance" "default" {
+  count                 = var.number
+  image_id              = data.baiducloud_images.default.images.0.id
+  name                  = "${var.instance_short_name}-${var.instance_role}-${format(var.instance_format, count.index + 1)}"
+  availability_zone     = data.baiducloud_zones.default.zones.0.zone_name
+  cpu_count             = data.baiducloud_specs.default.specs.0.cpu_count
+  memory_capacity_in_gb = data.baiducloud_specs.default.specs.0.memory_size_in_gb
+  billing = {
+    payment_timing = var.payment_timing
+  }
+  admin_pass = var.admin_pass
+
+  subnet_id       = baiducloud_subnet.default.id
+  security_groups = [baiducloud_security_group.default.id]
+
+  related_release_flag     = true
+  delete_cds_snapshot_flag = true
+
+  // The action is optional, which can be start or stop, default is start.
+  action = "start"
+
+  // option parameter, please set your keypair id
+  #keypair_id = "k-xxxxxx"
+
+  root_disk_size_in_gb = 40
+  root_disk_storage_type       = "cloud_hp1"
+
 #  cds_disks {
 #    cds_size_in_gb = 20
 #    storage_type   = "cloud_hp1"
 #  }
-#
-##  cds_disks {
-##    cds_size_in_gb = 60
-##    storage_type   = "hp1"
-##  }
-#
-#  tags = {
-#    "testKey"  = "testValue"
-#    "testKey2" = "testValue2"
+
+#  cds_disks {
+#    cds_size_in_gb = 60
+#    storage_type   = "hp1"
 #  }
-#}
+
+  tags = {
+    "testKey"  = "testValue"
+    "testKey2" = "testValue2"
+  }
+
+  instance_type = "N5"
+
+}
 
 #resource "baiducloud_eip_association" "default" {
 #  count         = var.number
@@ -137,14 +140,14 @@ resource "baiducloud_security_group_rule" "default2" {
 #  instance_id = baiducloud_instance.my-server.*.id[count.index]
 #}
 
-resource "baiducloud_instance" "my-server" {
-  image_id = "m-A4jJpFzi"
-  name = "my-instance"
-  availability_zone = data.baiducloud_zones.default.zones.0.zone_name
-  cpu_count = "2"
-  memory_capacity_in_gb = "8"
-  billing = {
-    payment_timing = "Postpaid"
-  }
-  instance_type = "N5"
-}
+#resource "baiducloud_instance" "my-server" {
+#  image_id = "m-A4jJpFzi"
+#  name = "my-instance"
+#  availability_zone = data.baiducloud_zones.default.zones.0.zone_name
+#  cpu_count = "4"
+#  memory_capacity_in_gb = "8"
+#  billing = {
+#    payment_timing = "Postpaid"
+#  }
+#  instance_type = "N5"
+#}
