@@ -16,9 +16,8 @@ module "rds" {
       "description" : "test database"
     },
   ]
-  privilege                  = var.privilege
-
-
+  privilege  = var.privilege
+  vswitch_id = var.vswitch_id
 }
 
 #resource "null_resource" "default" {
@@ -130,3 +129,9 @@ variable "privilege" {
 #  type        = string
 #  default     = ""
 #}
+
+variable "vswitch_id" {
+  type        = string
+  description = "The vswitch id of the RDS instance. If set, the RDS instance will be created in VPC, or it will be created in classic network."
+  default     = ""
+}
