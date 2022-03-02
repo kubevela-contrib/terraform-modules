@@ -2,31 +2,61 @@ terraform {
   required_providers {
     alicloud = {
       source  = "hashicorp/alicloud"
-      version = "1.153.0"
+      version = "1.156.0"
     }
   }
 }
 
-locals {
-  default_description = "Auto created by serverless devs with terraform"
-}
-
 resource "alicloud_sae_application" "auto" {
   count           = 1
-  app_name        = var.name
-  app_description = local.default_description
+  app_name        = var.app_name
+  app_description = var.app_description
   auto_config     = true
-  # image_url = "registry-vpc.cn-hangzhou.aliyuncs.com/sae-demo-image/provider:1.099"
-  image_url       = "registry.cn-hangzhou.aliyuncs.com/google_containers/nginx-slim:0.9"
-
-  package_type = "Image"
-  timezone     = "Asia/Beijing"
-  replicas     = "1"
-  cpu          = "500"
-  memory       = "1024"
-  deploy       = true
+  deploy          = true
+  image_url       = var.image_url
+  package_type    = var.package_type
+  timezone        = "Asia/Beijing"
+  replicas        = var.replicas
+  cpu             = var.cpu
+  memory          = var.memory
 }
 
-variable "name" {
-  default = "dev"
+variable "app_name" {
+  description = "The name of the application"
+  type        = string
+}
+
+variable "app_description" {
+  default     = "description created by Terraform"
+  description = "The description of the application"
+  type        = string
+}
+
+variable "package_type" {
+  default     = "Image"
+  description = "The package type of the application"
+  type        = string
+}
+
+variable "cpu" {
+  default     = "500"
+  description = "The cpu of the application, in unit of millicore"
+  type        = string
+}
+
+variable "memory" {
+  default     = "1024"
+  description = "The memory of the application, in unit of MB"
+  type        = string
+}
+
+variable "image_url" {
+  description = "The image url of the application, like `registry.cn-hangzhou.aliyuncs.com/google_containers/nginx-slim:0.9`"
+  type        = string
+}
+
+variable "replicas" {
+  default     = "1"
+  description = "The replicas of the application"
+  type        = string
 }
