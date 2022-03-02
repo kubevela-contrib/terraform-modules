@@ -9,21 +9,26 @@ terraform {
 
 resource "alicloud_sae_namespace" "default" {
   namespace_description = var.namespace_description
-  namespace_id          = format("%s:demo", var.region)
+  namespace_id          = var.namespace_id
   namespace_name        = var.namespace_name
-}
-
-
-variable "region" {
-  description = "Region"
-  type        = string
 }
 
 variable "namespace_description" {
   description = "Namespace Description"
-  default     = "default"
+  default     = "a namespace"
 }
 
 variable "namespace_name" {
   description = "Namespace Name"
+  type = string
+}
+
+variable "namespace_id" {
+  description = "Namespace ID"
+  type = string
+}
+
+output "namespace_id" {
+  value = var.namespace_id
+  description = "Namespace ID"
 }
