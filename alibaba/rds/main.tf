@@ -1,3 +1,13 @@
+locals {
+  databases = [
+    {
+      "name" : var.database_name,
+      "character_set" : "utf8",
+      "description" : "test database"
+    },
+  ]
+}
+
 module "rds" {
   source                     = "github.com/kubevela-contrib/terraform-alicloud-rds"
   engine                     = "MySQL"
@@ -9,13 +19,8 @@ module "rds" {
   password                   = var.password
   allocate_public_connection = var.allocate_public_connection
   security_ips               = var.security_ips
-  databases                  = [
-    {
-      "name" : var.database_name,
-      "character_set" : "utf8",
-      "description" : "test database"
-    },
-  ]
+  databases                  = length(var.databases) != 0 ? var.databases: local.databases
+
   privilege  = var.privilege
   vswitch_id = var.vswitch_id
 }
@@ -134,4 +139,10 @@ variable "vswitch_id" {
   type        = string
   description = "The vswitch id of the RDS instance. If set, the RDS instance will be created in VPC, or it will be created in classic network."
   default     = ""
+}
+
+variable "databases" {
+  description = "The database list, each database is a map, the map contains the following attributes: name, character_set, description, like `[{\"name\":\"test\",\"character_set\":\"utf8\",\"description\":\"test database\"},]`. It conflicts with `database_name`."
+  type = list(map(string))
+  default = []
 }
