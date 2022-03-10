@@ -38,12 +38,12 @@ resource "alicloud_sae_application" "manual" {
 #    target_port   = 80
 #  }
 
-    internet_slb_id = alicloud_slb_load_balancer.slb2.id
+    internet_slb_id = alicloud_slb_load_balancer.slb.id
     internet {
       https_cert_id = ""
-      port = 80
-      protocol = "TCP"
-      target_port = 8080
+      port = var.port
+      protocol = "HTTP"
+      target_port = 80
     }
 
 
@@ -72,7 +72,7 @@ resource "alicloud_sae_application" "manual" {
 
 resource "alicloud_sae_namespace" "default" {
   namespace_description = local.default_description
-  namespace_id          = "cn-hangzhou:demo"
+  namespace_id          = "cn-hangzhou:demo123"
   namespace_name        = local.default_name
 }
 
@@ -90,16 +90,6 @@ resource "alicloud_vswitch" "vsw" {
 
 resource "alicloud_slb_load_balancer" "slb" {
   load_balancer_name = local.default_name
-  address_type       = "intranet"
-  load_balancer_spec = "slb.s2.small"
-  vswitch_id         = alicloud_vswitch.vsw.id
-  tags               = {
-    info = "create for internet"
-  }
-}
-
-resource "alicloud_slb_load_balancer" "slb2" {
-  load_balancer_name = local.default_name
   address_type       = "internet"
   load_balancer_spec = "slb.s2.small"
   vswitch_id         = alicloud_vswitch.vsw.id
@@ -108,13 +98,6 @@ resource "alicloud_slb_load_balancer" "slb2" {
   }
 }
 
-#
-#resource "alicloud_vswitch" "vsw2" {
-#  vpc_id     = alicloud_vpc.vpc.id
-#  cidr_block = "172.20.0.0/21"
-#  zone_id    = data.alicloud_zones.default.zones.1.id
-#}
-
 resource "alicloud_security_group" "group" {
   name   = local.default_name
   vpc_id = alicloud_vpc.vpc.id
@@ -122,5 +105,13 @@ resource "alicloud_security_group" "group" {
 
 
 variable "name" {
-  default = "manual"
+  default = "slb-access"
+}
+
+variable "port" {
+  default = "8000"
+}
+
+output "endpoint" {
+  value = format("http://%s:%s", alicloud_slb_load_balancer.slb.address, var.port)
 }
