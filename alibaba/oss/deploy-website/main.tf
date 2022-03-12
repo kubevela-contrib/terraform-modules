@@ -37,12 +37,7 @@ variable "endpoint" {
   type = string
 }
 
-variable "index_document" {
-  description = "OSS bucket static website index document"
-  default     = "index.html"
-  type        = string
-}
-
 output "URL" {
-  value = "https://${var.bucket}.${var.endpoint}/${var.index_document}"
+  description = "The URL of the website"
+  value = "https://${var.bucket}.${var.endpoint}"
 }

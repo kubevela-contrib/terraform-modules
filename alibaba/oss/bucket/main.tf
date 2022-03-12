@@ -44,7 +44,7 @@ output "EXTERNAL_ENDPOINT" {
   description = "OSS bucket external endpoint"
 }
 
-output "INTRANE_ENDPOINT" {
+output "INTRANET_ENDPOINT" {
   value = alicloud_oss_bucket.bucket-acl.intranet_endpoint
   description = "OSS bucket internal endpoint"
 }
