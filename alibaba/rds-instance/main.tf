@@ -7,7 +7,7 @@ module "rds" {
   instance_name              = var.instance_name
   allocate_public_connection = var.allocate_public_connection
   security_ips               = var.security_ips
-  vswitch_id = var.vswitch_id
+  vswitch_id                 = var.vswitch_id
   create_account             = false
   create_database            = false
 }
@@ -27,7 +27,6 @@ output "instance_port" {
   description = "RDS Instance Port"
 }
 
-//TODO: what's the difference between these two
 output "instance_connection_string" {
   value       = module.rds.this_db_instance_connection_string
   description = "RDS Instance Host"
@@ -54,11 +53,13 @@ variable "instance_type" {
 
 variable "engine" {
   description = "RDS Database type. Value options: MySQL, SQLServer, PostgreSQL, and PPAS"
+  type        = string
   default     = "MySQL"
 }
 
 variable "engine_version" {
   description = "RDS Database version. Value options can refer to the latest docs [CreateDBInstance](https://www.alibabacloud.com/help/doc-detail/26228.htm) `EngineVersion`"
+  type        = string
   default     = "8.0"
 }
 
@@ -68,8 +69,23 @@ variable "instance_storage" {
   default     = 20
 }
 
+variable "security_ips" {
+  description = "List of IP addresses allowed to access all databases of an instance"
+  type        = list(any)
+  default     = ["0.0.0.0/0",]
+}
+
 variable "vswitch_id" {
   type        = string
   description = "The vswitch id of the RDS instance. If set, the RDS instance will be created in VPC, or it will be created in classic network."
   default     = ""
+}
+
+#################
+# Rds Connection
+#################
+variable "allocate_public_connection" {
+  description = "Whether to allocate public connection for a RDS instance."
+  type        = bool
+  default     = true
 }
