@@ -32,6 +32,11 @@ output "instance_id" {
 #################
 # Database Output
 #################
+output "database_id" {
+  description = "Rds database id."
+  value       = module.rds.this_db_database_id
+}
+
 output "database_user" {
   value       = module.rds.this_db_database_account
   description = "Database User"
