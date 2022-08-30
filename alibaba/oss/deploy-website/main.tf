@@ -7,17 +7,21 @@ terraform {
   }
 }
 
+locals {
+  website_source = "website_source"
+}
+
 resource "null_resource" "default" {
   provisioner "local-exec" {
     command = <<EOF
 apk update
 apk add build-base libtool automake autoconf nasm pkgconfig util-linux git
-rm -rf ${var.src_folder}
-git clone ${var.src_url}
-cd ${var.src_folder}
-${var.prepare_build_env_cmd}
+rm -rf ${local.website_source}
+git clone ${var.src_url} ${local.website_source}
+cd ${local.website_source}
+${var.prerequisite_cmd}
 ${var.build_cmd}
-ossutil cp -r ${var.dst_folder} oss://${var.bucket} --access-key-id=$ALICLOUD_ACCESS_KEY --access-key-secret=$ALICLOUD_SECRET_KEY --endpoint=${var.endpoint} --force
+ossutil cp -r ${var.generated_dir} oss://${var.bucket} --access-key-id=$ALICLOUD_ACCESS_KEY --access-key-secret=$ALICLOUD_SECRET_KEY --endpoint=${var.endpoint} --force
     EOF
   }
 }
@@ -35,33 +39,27 @@ variable "endpoint" {
 }
 
 variable "src_url" {
-  description = "Source code repo on GitHub"
+  description = "The URL of the website source code repository"
   type    = string
-  default = "https://github.com/kubevela/kubevela.io.git"
+  default = "https://github.com/open-gitops/website.git"
 }
 
-variable "src_folder" {
-  description = "Source code root folder path"
-  type    = string
-  default = "kubevela.io/"
-}
-
-variable "prepare_build_env_cmd" {
-  description = "Required commands for prepare build env"
+variable "prerequisite_cmd" {
+  description = "Prerequisite commands to setup building env, support Alpine `apk` package manager"
   type    = string
   default = "apk add nodejs npm && npm install --global yarn"
 }
 
 variable "build_cmd" {
-  description = "Commands for build source code"
+  description = "Commands for building website source code"
   type    = string
   default = "yarn install && yarn build"
 }
 
-variable "dst_folder" {
-  description = "Building output folder path"
+variable "generated_dir" {
+  description = "Directory name of generated static content"
   type    = string
-  default = "build/"
+  default = "public"
 }
 
 output "URL" {
