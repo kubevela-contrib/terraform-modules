@@ -8,6 +8,7 @@ module "rds" {
   allocate_public_connection = var.allocate_public_connection
   security_ips               = var.security_ips
   vswitch_id                 = var.vswitch_id
+  region                     = var.region
   create_account             = false
   create_database            = false
 }
@@ -35,6 +36,14 @@ output "instance_connection_string" {
 output "instance_public_connection_string" {
   value       = module.rds.db_public_connection_string
   description = "RDS Instance Public Host"
+}
+
+#################
+# Provider
+#################
+variable "region" {
+  description = "The region used to launch this module resources."
+  default     = ""
 }
 
 #################
