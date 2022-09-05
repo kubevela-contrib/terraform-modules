@@ -19,7 +19,7 @@ module "rds" {
   password     = var.password
   databases    = local.databases
   privilege    = var.privilege
-  region =  var.
+  region       = var.region
 }
 
 #################
