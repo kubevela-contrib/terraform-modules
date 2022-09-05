@@ -76,6 +76,18 @@ output "DATABASE_NAME" {
   description = "RDS Database Name"
 }
 
+#################
+# Provider
+#################
+variable "region" {
+  description = "The region used to launch this module resources."
+  default     = ""
+}
+
+
+#################
+# Rds Instance
+#################
 variable "instance_name" {
   description = "RDS instance name"
   type        = string
@@ -91,12 +103,6 @@ variable "account_name" {
 variable "password" {
   description = "RDS instance account password"
   type        = string
-}
-
-variable "allocate_public_connection" {
-  description = "Whether to allocate public connection for a RDS instance."
-  type        = bool
-  default     = true
 }
 
 variable "security_ips" {
@@ -145,4 +151,13 @@ variable "databases" {
   description = "The database list, each database is a map, the map contains the following attributes: name, character_set, description, like `[{\"name\":\"test\",\"character_set\":\"utf8\",\"description\":\"test database\"},]`. It conflicts with `database_name`."
   type = list(map(string))
   default = []
+}
+
+#################
+# Rds Connection
+#################
+variable "allocate_public_connection" {
+  description = "Whether to allocate public connection for a RDS instance."
+  type        = bool
+  default     = true
 }

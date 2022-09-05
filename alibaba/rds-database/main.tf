@@ -19,6 +19,7 @@ module "rds" {
   password     = var.password
   databases    = local.databases
   privilege    = var.privilege
+  region =  var.
 }
 
 #################
@@ -50,6 +51,14 @@ output "database_password" {
 output "database_name" {
   value       = module.rds.this_db_database_name
   description = "RDS Database Name"
+}
+
+#################
+# Provider
+#################
+variable "region" {
+  description = "The region used to launch this module resources."
+  default     = ""
 }
 
 #################
@@ -89,9 +98,3 @@ variable "database_description" {
   type        = string
   default     = ""
 }
-
-#variable "databases" {
-#  description = "The database list, each database is a map, the map contains the following attributes: name, character_set, description, like `[{\"name\":\"test\",\"character_set\":\"utf8\",\"description\":\"test database\"},]`. It conflicts with `database_name`."
-#  type        = list(map(string))
-#  default     = []
-#}
