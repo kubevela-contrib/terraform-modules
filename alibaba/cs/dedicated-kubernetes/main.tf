@@ -1,5 +1,5 @@
 module "kubernetes" {
-  source = "github.com/zzxwill/terraform-alicloud-kubernetes"
+  source = "github.com/terraform-alicloud-modules/terraform-alicloud-kubernetes"
 
   new_nat_gateway       = true
   vpc_name              = var.vpc_name
