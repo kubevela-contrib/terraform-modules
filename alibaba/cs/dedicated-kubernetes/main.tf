@@ -13,7 +13,6 @@ module "kubernetes" {
   k8s_worker_number     = var.k8s_worker_number
   cpu_core_count        = var.cpu_core_count
   memory_size           = var.memory_size
-  zone_id               = var.zone_id
   k8s_version           = var.k8s_version
   k8s_name_prefix       = var.k8s_name_prefix
 }
@@ -185,13 +184,6 @@ variable "k8s_version" {
   description = "The version of the kubernetes version.  Valid values: '1.16.6-aliyun.1','1.14.8-aliyun.1'. Default to '1.16.6-aliyun.1'."
   type        = string
   default     = "1.20.11-aliyun.1"
-}
-
-variable "zone_id" {
-  description = "Availability Zone ID"
-  type        = string
-  default     = "cn-hongkong-b"
-  # "cn-beijing-a"
 }
 
 output "RESOURCE_IDENTIFIER" {
