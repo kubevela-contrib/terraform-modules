@@ -1,5 +1,5 @@
 module "kubernetes" {
-  source = "github.com/zzxwill/terraform-alicloud-kubernetes"
+  source = "github.com/chivalryq/terraform-alicloud-kubernetes"
 
   new_nat_gateway       = true
   vpc_name              = var.vpc_name
@@ -13,7 +13,6 @@ module "kubernetes" {
   k8s_worker_number     = var.k8s_worker_number
   cpu_core_count        = var.cpu_core_count
   memory_size           = var.memory_size
-  zone_id               = var.zone_id
   k8s_version           = var.k8s_version
   k8s_name_prefix       = var.k8s_name_prefix
 }
@@ -94,36 +93,13 @@ variable "new_nat_gateway" {
 variable "master_instance_types" {
   description = "The ecs instance types used to launch master nodes."
   type        = list(any)
-  default = [
-    # hongkong
-    "ecs.sn1ne.xlarge",
-    # hongkong
-    "ecs.c6.xlarge",
-    # hongkong
-    "ecs.c5.xlarge",
-    "ecs.n4.xlarge",
-    # "ecs.n1.large",
-    # "ecs.sn1.large",
-    # "ecs.s6-c1m2.xlarge",
-    # "ecs.c6e.xlarge"
-  ]
+  default = []
 }
 
 variable "worker_instance_types" {
   description = "The ecs instance types used to launch worker nodes."
   type        = list(any)
-  default = [
-    # hongkong
-    "ecs.sn1ne.xlarge",
-    # hongkong
-    "ecs.c6.xlarge",
-    # hongkong
-    "ecs.c6e.xlarge",
-    "ecs.n4.xlarge",
-    //    "ecs.n1.large",
-    //    "ecs.sn1.large",
-    //    "ecs.s6-c1m2.xlarge"
-  ]
+  default = []
 }
 
 variable "node_cidr_mask" {
@@ -182,55 +158,12 @@ variable "k8s_service_cidr" {
 }
 
 variable "k8s_version" {
-  description = "The version of the kubernetes version.  Valid values: '1.16.6-aliyun.1','1.14.8-aliyun.1'. Default to '1.16.6-aliyun.1'."
+  description = "The version of the kubernetes version.  Valid values: '1.24.6-aliyun.1','1.22.15-aliyun.1'. Default to '1.24.6-aliyun.1'."
   type        = string
-  default     = "1.20.11-aliyun.1"
-}
-
-variable "zone_id" {
-  description = "Availability Zone ID"
-  type        = string
-  default     = "cn-hongkong-b"
-  # "cn-beijing-a"
-}
-
-output "RESOURCE_IDENTIFIER" {
-  description = "The identifier of the resource"
-  value       = module.kubernetes.cluster_id
+  default     = "1.24.6-aliyun.1"
 }
 
 output "CLUSTER_ID" {
   value       = module.kubernetes.cluster_id
   description = "The ID of the cluster"
-}
-
-output "NAME" {
-  value       = module.kubernetes.name
-  description = "The name of the kubernetes cluster."
-}
-
-output "KUBECONFIG" {
-  value       = module.kubernetes.kubeconfig
-  depends_on  = [module.kubernetes]
-  description = "The KubeConfig string of the kubernetes cluster."
-}
-
-output "CLUSTER_CA_CERT" {
-  value       = module.kubernetes.cluster_ca_cert
-  description = "The CA certificate of the kubernetes cluster."
-}
-
-output "CLIENT_CERT" {
-  value       = module.kubernetes.client_cert
-  description = "The client certificate of the kubernetes cluster."
-}
-
-output "CLIENT_KEY" {
-  value       = module.kubernetes.client_key
-  description = "The client key of the kubernetes cluster."
-}
-
-output "API_SERVER_INTERNET" {
-  value       = module.kubernetes.api_server_internet
-  description = "The internet access of the kubernetes api server."
 }
