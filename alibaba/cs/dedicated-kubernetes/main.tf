@@ -1,5 +1,5 @@
 module "kubernetes" {
-  source = "github.com/terraform-alicloud-modules/terraform-alicloud-kubernetes"
+  source = "github.com/chivalryq/terraform-alicloud-kubernetes"
 
   new_nat_gateway       = true
   vpc_name              = var.vpc_name
@@ -93,36 +93,13 @@ variable "new_nat_gateway" {
 variable "master_instance_types" {
   description = "The ecs instance types used to launch master nodes."
   type        = list(any)
-  default = [
-    # hongkong
-    "ecs.sn1ne.xlarge",
-    # hongkong
-    "ecs.c6.xlarge",
-    # hongkong
-    "ecs.c5.xlarge",
-    "ecs.n4.xlarge",
-    # "ecs.n1.large",
-    # "ecs.sn1.large",
-    # "ecs.s6-c1m2.xlarge",
-    # "ecs.c6e.xlarge"
-  ]
+  default = []
 }
 
 variable "worker_instance_types" {
   description = "The ecs instance types used to launch worker nodes."
   type        = list(any)
-  default = [
-    # hongkong
-    "ecs.sn1ne.xlarge",
-    # hongkong
-    "ecs.c6.xlarge",
-    # hongkong
-    "ecs.c6e.xlarge",
-    "ecs.n4.xlarge",
-    //    "ecs.n1.large",
-    //    "ecs.sn1.large",
-    //    "ecs.s6-c1m2.xlarge"
-  ]
+  default = []
 }
 
 variable "node_cidr_mask" {
@@ -181,9 +158,9 @@ variable "k8s_service_cidr" {
 }
 
 variable "k8s_version" {
-  description = "The version of the kubernetes version.  Valid values: '1.16.6-aliyun.1','1.14.8-aliyun.1'. Default to '1.16.6-aliyun.1'."
+  description = "The version of the kubernetes version.  Valid values: '1.24.6-aliyun.1','1.22.15-aliyun.1'. Default to '1.24.6-aliyun.1'."
   type        = string
-  default     = "1.20.11-aliyun.1"
+  default     = "1.24.6-aliyun.1"
 }
 
 output "CLUSTER_ID" {
