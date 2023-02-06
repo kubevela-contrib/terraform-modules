@@ -76,6 +76,6 @@ output "VSWITCH_ID" {
 }
 
 output "VPC_ID" {
-  value = alicloud_vpc.vpc.0.id
+  value = var.vpc_id != "" ? var.vpc_id : alicloud_vpc.vpc.0.id
   description = "VPC ID"
 }
